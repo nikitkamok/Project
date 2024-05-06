@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">PlaneGame</string>
+    <string name="start">Начать</string>
+    <string name="back">Назад</string>
+    <string name="settings">Настройки</string>
+    <string name="achievements">Достижения</string>
+    <string name="stats">Статистика</string>
+    <string name="exit_by_using_back">Нажмите еще раз, чтобы выйти</string>
+</resources>

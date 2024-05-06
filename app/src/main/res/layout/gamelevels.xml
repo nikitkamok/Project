@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/gamelevels_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/main_background" />
+
+    <LinearLayout
+        android:id="@+id/gamelevels_top_left"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top|left"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/gamelevels_container2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/gamelevels_buttonBack"
+                style="@style/DefaultButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/back"
+                android:textAllCaps="false"
+                android:textAppearance="@android:style/TextAppearance"
+                android:textSize="24sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/gamelevels_center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/gamelevels_container1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:id="@+id/gamelevels_lines"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/line1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/gamelevels_level1"
+                            style="@style/DefaultTextStyle"
+                            android:text="1"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/gamelevels_level2"
+                            style="@style/DefaultTextStyle"
+                            android:text="2"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/gamelevels_level3"
+                            style="@style/DefaultTextStyle"
+                            android:text="3"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/gamelevels_level4"
+                            style="@style/DefaultTextStyle"
+                            android:text="4"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/gamelevels_level5"
+                            style="@style/DefaultTextStyle"
+                            android:text="5"
+                            android:textSize="24sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/line2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/gamelevels_level6"
+                            style="@style/DefaultTextStyle"
+                            android:text="6"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/gamelevels_level7"
+                            style="@style/DefaultTextStyle"
+                            android:text="7"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/gamelevels_level8"
+                            style="@style/DefaultTextStyle"
+                            android:text="8"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/gamelevels_level9"
+                            style="@style/DefaultTextStyle"
+                            android:text="9"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/gamelevels_level10"
+                            style="@style/DefaultTextStyle"
+                            android:text="10"
+                            android:textSize="24sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/line3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/gamelevels_level11"
+                            style="@style/DefaultTextStyle"
+                            android:text="11"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/gamelevels_level12"
+                            style="@style/DefaultTextStyle"
+                            android:text="12"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/gamelevels_level13"
+                            style="@style/DefaultTextStyle"
+                            android:text="13"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/gamelevels_level14"
+                            style="@style/DefaultTextStyle"
+                            android:text="14"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/gamelevels_level15"
+                            style="@style/DefaultTextStyle"
+                            android:text="15"
+                            android:textSize="24sp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
