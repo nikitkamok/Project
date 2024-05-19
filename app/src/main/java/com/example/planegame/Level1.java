@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
+import android.view.LayoutInflater;
+import android.view.SurfaceView;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 public class Level1 extends AppCompatActivity {
@@ -20,14 +22,17 @@ public class Level1 extends AppCompatActivity {
         getWindow().getDecorView().getWindowInsetsController().hide(
                 android.view.WindowInsets.Type.navigationBars() //спрятать меню навигации
         );
+        LayoutInflater factory = LayoutInflater.from(this);
+        View gameBoard = factory.inflate(R.layout.universal, null);
         setContentView(R.layout.universal);
         //объявление объектов уровня
-        Button buttonPauseMenu = (Button) findViewById(R.id.levels_pauseMenu);
-        Button buttonReset = (Button) findViewById(R.id.levels_resetlevel);
-        Button buttonSettings = (Button) findViewById(R.id.levels_settings);
-        Button buttonResume = (Button) findViewById(R.id.levels_resumePause);
-        Button buttonExit = (Button) findViewById(R.id.levels_exit);
+        Button buttonPauseMenu = (Button) findViewById(R.id.levels_pauseMenuBtn);
+        Button buttonReset = (Button) findViewById(R.id.levels_resetLevelBtn);
+        Button buttonSettings = (Button) findViewById(R.id.levels_settingsBtn);
+        Button buttonResume = (Button) findViewById(R.id.levels_resumePauseBtn);
+        Button buttonExit = (Button) findViewById(R.id.levels_exitBtn);
         LinearLayout pauseMenu = (LinearLayout) findViewById(R.id.levels_container3);
+
         //поставить игру на паузу
         buttonPauseMenu.setOnClickListener(v -> {
             try {

@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/levels_background2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/levels_background" />
-
-    <com.example.planegame.GameView
-        android:id="@+id/gv"
+    <com.example.planegame.GameBoard
+        android:id="@+id/gameBoard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
@@ -32,7 +23,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/levels_pauseMenu"
+                android:id="@+id/levels_pauseMenuBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -56,25 +47,25 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/levels_resetlevel"
+                android:id="@+id/levels_resetLevelBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Reset" />
 
             <Button
-                android:id="@+id/levels_settings"
+                android:id="@+id/levels_settingsBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="settings" />
 
             <Button
-                android:id="@+id/levels_resumePause"
+                android:id="@+id/levels_resumePauseBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Resume" />
 
             <Button
-                android:id="@+id/levels_exit"
+                android:id="@+id/levels_exitBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Exit" />
@@ -82,4 +73,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</RelativeLayout>
+</FrameLayout>
