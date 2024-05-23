@@ -23,11 +23,6 @@ public class MainActivity extends AppCompatActivity {
         getWindow().getDecorView().getWindowInsetsController().hide(
                 android.view.WindowInsets.Type.navigationBars() //спрятать меню навигации
         );
-        //узнаем и сохраняем размеры экрана устройства
-        DisplayMetrics dm = new DisplayMetrics();
-        this.getWindowManager().getCurrentWindowMetrics();
-        Constans.SCREEN_WIDTH = dm.widthPixels;
-        Constans.SCREEN_HEIGHT = dm.heightPixels;
 
         setContentView(R.layout.activity_main);
         //объявление объектов главного меню

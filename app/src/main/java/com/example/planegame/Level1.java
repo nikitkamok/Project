@@ -23,7 +23,7 @@ public class Level1 extends AppCompatActivity {
                 android.view.WindowInsets.Type.navigationBars() //спрятать меню навигации
         );
         LayoutInflater factory = LayoutInflater.from(this);
-        View gameBoard = factory.inflate(R.layout.universal, null);
+        View Game = factory.inflate(R.layout.universal, null);
         setContentView(R.layout.universal);
         //объявление объектов уровня
         Button buttonPauseMenu = (Button) findViewById(R.id.levels_pauseMenuBtn);
