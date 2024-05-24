@@ -24,7 +24,8 @@ public class Level1 extends AppCompatActivity {
         );
         LayoutInflater factory = LayoutInflater.from(this);
         View Game = factory.inflate(R.layout.universal, null);
-        setContentView(R.layout.universal);
+        setContentView(Game);
+
         //объявление объектов уровня
         Button buttonPauseMenu = (Button) findViewById(R.id.levels_pauseMenuBtn);
         Button buttonReset = (Button) findViewById(R.id.levels_resetLevelBtn);

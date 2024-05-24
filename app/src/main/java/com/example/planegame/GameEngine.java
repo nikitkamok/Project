@@ -15,7 +15,6 @@ public class GameEngine {
     private int cellSize;
     private Paint paint;
     private Plane plane;
-    private int planeRow = 0, planeCol = 0;
     private Set<String> touchedCells;
     private boolean isPlaneMoving = false;
     private List<int[]> path;
@@ -24,7 +23,7 @@ public class GameEngine {
     public GameEngine(Context context, int cellSize) {
         this.cellSize = cellSize;
         this.paint = new Paint();
-        this.plane = new Plane(context, planeRow, planeCol, cellSize);
+        this.plane = new Plane(context, 0, 0, cellSize);
         this.touchedCells = new HashSet<>();
     }
 
@@ -64,11 +63,9 @@ public class GameEngine {
     //Собираем маршрут для самолета
     public void handleTouchEvent(int row, int col) {
         String cell = row + "," + col;
-        if(!touchedCells.contains(cell)) {
-            touchedCells.add(cell);
-        }
+        touchedCells.add(cell);
     }
-
+    //Тыркаем по самолету
     public boolean handlePlaneTouchEvent(int row, int col) {
         return row == plane.getRow() && col == plane.getCol() && !isPlaneMoving;
     }
@@ -81,7 +78,7 @@ public class GameEngine {
             int col = Integer.parseInt(parts[1]);
             path.add(new int[]{row, col});
         }
-
+        //Проверяем можем ли мы начинать движение
         if (isPathContinuous() && startsFromPlane()) {
             isPlaneMoving = true;
             pathIndex = 0;
@@ -106,18 +103,35 @@ public class GameEngine {
         if (path.isEmpty()) {
             return false;
         }
+        //Считываем позицию самолета и сравниваем с началом маршрута
         int[] firstCell = path.get(0);
         return firstCell[0] == plane.getRow() && firstCell[1] == plane.getCol();
     }
     //Передвижение самолета
     private void movePlane() {
-        if (pathIndex < path.size()) {
-            plane.setPosition(path.get(pathIndex)[0], path.get(pathIndex)[1]);
+        if(pathIndex < path.size()) {
+            int[] nextCell = path.get(pathIndex);
+            int nextRow = nextCell[0];
+            int nextCol = nextCell[1];
+            //Определяем движение самолета
+            int rowDiff = nextRow - plane.getRow();
+            int colDiff = nextCol - plane.getCol();
+            //Перемещаемся в соответсвии с направлением выше
+            if (rowDiff < 0) {
+                plane.moveUp();
+            } else if (rowDiff > 0) {
+                plane.moveDown();
+            } else if (colDiff < 0) {
+                plane.moveLeft();
+            } else if (colDiff > 0) {
+                plane.moveRight();
+            }
             pathIndex++;
-        } else {
+        }
+        else {
             isPlaneMoving = false;
             touchedCells.clear();
-            //Устанавлием новую позицию самолета
+            //Устанавливаем последние местоположение самолета
             int[] lastCell = path.get(path.size() - 1);
             plane.setPosition(lastCell[0], lastCell[1]);
         }

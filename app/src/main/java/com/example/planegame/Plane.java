@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 public class Plane {
+    private int rows = 8, cols = 14;
     private int row, col;
     private int cellSize;
     private Paint paint;
@@ -38,5 +39,33 @@ public class Plane {
 
     public int getCol() {
         return col;
+    }
+
+    public void moveUp() {
+        //Проверяем не достигли ли мы границ поля
+        if (row > 0) {
+            row--;
+        }
+    }
+
+    public void moveDown() {
+        //Проверяем не достигли ли мы границ поля
+        if (row < (rows - 1)) {
+            row++;
+        }
+    }
+
+    public void moveLeft() {
+        //Проверяем не достигли ли мы границ поля
+        if (col > 0) {
+            col--;
+        }
+    }
+
+    public void moveRight() {
+        //Проверяем не достигли ли мы границ поля
+        if (col < (cols - 1)) {
+            col++;
+        }
     }
 }
