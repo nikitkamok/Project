@@ -5,11 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import java.util.List;
 
 public class Plane {
-    private int rows = 8, cols = 14;
-    private int row, col;
     private int cellSize;
+    private int row, col;
     private Paint paint;
     private Bitmap planeBitmap;
 
@@ -50,7 +50,7 @@ public class Plane {
 
     public void moveDown() {
         //Проверяем не достигли ли мы границ поля
-        if (row < (rows - 1)) {
+        if (row < (Constans.ROWS - 1)) {
             row++;
         }
     }
@@ -64,8 +64,29 @@ public class Plane {
 
     public void moveRight() {
         //Проверяем не достигли ли мы границ поля
-        if (col < (cols - 1)) {
+        if (col < (Constans.COLS - 1)) {
             col++;
+        }
+    }
+
+    public void movePlane(List<int[]> path, int pathIndex) {
+        if(pathIndex < path.size()) {
+            int[] nextCell = path.get(pathIndex);
+            int nextRow = nextCell[0];
+            int nextCol = nextCell[1];
+            //Определяем движение самолета
+            int rowDiff = nextRow - getRow();
+            int colDiff = nextCol - getCol();
+            //Перемещаемся в соответсвии с направлением выше
+            if (rowDiff < 0) {
+                moveUp();
+            } else if (rowDiff > 0) {
+                moveDown();
+            } else if (colDiff < 0) {
+                moveLeft();
+            } else if (colDiff > 0) {
+                moveRight();
+            }
         }
     }
 }

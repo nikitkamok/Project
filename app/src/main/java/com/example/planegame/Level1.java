@@ -5,11 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 public class Level1 extends AppCompatActivity {
@@ -27,12 +24,12 @@ public class Level1 extends AppCompatActivity {
         setContentView(Game);
 
         //объявление объектов уровня
-        Button buttonPauseMenu = (Button) findViewById(R.id.levels_pauseMenuBtn);
-        Button buttonReset = (Button) findViewById(R.id.levels_resetLevelBtn);
-        Button buttonSettings = (Button) findViewById(R.id.levels_settingsBtn);
-        Button buttonResume = (Button) findViewById(R.id.levels_resumePauseBtn);
-        Button buttonExit = (Button) findViewById(R.id.levels_exitBtn);
-        LinearLayout pauseMenu = (LinearLayout) findViewById(R.id.levels_container3);
+        Button buttonPauseMenu = findViewById(R.id.levels_pauseMenuBtn);
+        Button buttonReset = findViewById(R.id.levels_resetLevelBtn);
+        Button buttonSettings = findViewById(R.id.levels_settingsBtn);
+        Button buttonResume = findViewById(R.id.levels_resumePauseBtn);
+        Button buttonExit = findViewById(R.id.levels_exitBtn);
+        LinearLayout pauseMenu = findViewById(R.id.levels_container3);
 
         //поставить игру на паузу
         buttonPauseMenu.setOnClickListener(v -> {

@@ -1,14 +1,9 @@
 package com.example.planegame;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.core.view.WindowInsetsControllerCompat;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Display;
-import android.view.WindowManager;
+import android.util.DisplayMetrics;;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -24,12 +19,17 @@ public class MainActivity extends AppCompatActivity {
                 android.view.WindowInsets.Type.navigationBars() //спрятать меню навигации
         );
 
+        DisplayMetrics dm = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        Constans.SCREEN_WIDTH = dm.widthPixels;
+        Constans.SCREEN_HEIGHT = dm.heightPixels;
+
         setContentView(R.layout.activity_main);
         //объявление объектов главного меню
-        Button buttonStart = (Button) findViewById(R.id.main_buttonStart);
-        Button buttonAchievements = (Button) findViewById(R.id.main_buttonAchievements);
-        Button buttonSettings = (Button) findViewById(R.id.main_buttonSettings);
-        Button buttonStats = (Button) findViewById(R.id.main_buttonStats);
+        Button buttonStart = findViewById(R.id.main_buttonStart);
+        Button buttonAchievements = findViewById(R.id.main_buttonAchievements);
+        Button buttonSettings = findViewById(R.id.main_buttonSettings);
+        Button buttonStats = findViewById(R.id.main_buttonStats);
 
         //переход из главного меню в меню уровней
         buttonStart.setOnClickListener(v -> {

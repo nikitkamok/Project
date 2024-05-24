@@ -11,19 +11,18 @@ import java.util.List;
 import java.util.Set;
 
 public class GameEngine {
-    private int rows = 8, cols = 14;
-    private int cellSize;
-    private Paint paint;
-    private Plane plane;
-    private Set<String> touchedCells;
+    private final int cellSize;
+    private final Paint paint;
+    private final Plane plane;
+    private final Set<String> touchedCells;
     private boolean isPlaneMoving = false;
     private List<int[]> path;
     private int pathIndex = 0;
 
     public GameEngine(Context context, int cellSize) {
-        this.cellSize = cellSize;
         this.paint = new Paint();
         this.plane = new Plane(context, 0, 0, cellSize);
+        this.cellSize = cellSize;
         this.touchedCells = new HashSet<>();
     }
 
@@ -35,8 +34,8 @@ public class GameEngine {
         canvas.drawColor(Color.WHITE);
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Color.BLACK);
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
+        for (int row = 0; row < Constans.ROWS; row++) {
+            for (int col = 0; col < Constans.COLS; col++) {
                 int left = col * cellSize;
                 int top = row * cellSize;
                 int right = left + cellSize;
@@ -107,25 +106,10 @@ public class GameEngine {
         int[] firstCell = path.get(0);
         return firstCell[0] == plane.getRow() && firstCell[1] == plane.getCol();
     }
-    //Передвижение самолета
-    private void movePlane() {
+
+    public void movePlane() {
         if(pathIndex < path.size()) {
-            int[] nextCell = path.get(pathIndex);
-            int nextRow = nextCell[0];
-            int nextCol = nextCell[1];
-            //Определяем движение самолета
-            int rowDiff = nextRow - plane.getRow();
-            int colDiff = nextCol - plane.getCol();
-            //Перемещаемся в соответсвии с направлением выше
-            if (rowDiff < 0) {
-                plane.moveUp();
-            } else if (rowDiff > 0) {
-                plane.moveDown();
-            } else if (colDiff < 0) {
-                plane.moveLeft();
-            } else if (colDiff > 0) {
-                plane.moveRight();
-            }
+            plane.movePlane(path, pathIndex);
             pathIndex++;
         }
         else {
@@ -136,9 +120,8 @@ public class GameEngine {
             plane.setPosition(lastCell[0], lastCell[1]);
         }
     }
-
     public void update() {
-        if (isPlaneMoving) {
+        if(isPlaneMoving) {
             movePlane();
         }
     }
