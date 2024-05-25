@@ -28,14 +28,10 @@
 
             <Button
                 android:id="@+id/gamelevels_buttonBack"
-                style="@style/DefaultButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/back"
-                android:textAllCaps="false"
-                android:textAppearance="@android:style/TextAppearance"
-                android:textSize="24sp" />
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/btn_back_state_pressed" />
         </LinearLayout>
     </LinearLayout>
 

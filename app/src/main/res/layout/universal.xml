@@ -26,10 +26,11 @@
 
             <Button
                 android:id="@+id/levels_pauseMenuBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="pause" />
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/btn_pause_state_pressed" />
+
         </LinearLayout>
 
     </LinearLayout>
@@ -39,14 +40,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="invisible">
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/levels_container4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="invisible">
 
             <Button
                 android:id="@+id/levels_resetLevelBtn"

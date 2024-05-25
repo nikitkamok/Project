@@ -1,29 +1,40 @@
 package com.example.planegame;
 
+import static android.os.SystemClock.sleep;
+
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 public class GameEngine {
     private final int cellSize;
     private final Paint paint;
     private final Plane plane;
-    private final Set<String> touchedCells;
+    private int planeRow = 5, planeCol = 5;
+    private final List<int[]> touchedCells;
     private boolean isPlaneMoving = false;
     private List<int[]> path;
     private int pathIndex = 0;
 
+    private Bitmap touchedCellBitmap;
+    private Bitmap backgrounfdBitmap;
+
     public GameEngine(Context context, int cellSize) {
         this.paint = new Paint();
-        this.plane = new Plane(context, 0, 0, cellSize);
+        this.plane = new Plane(context, planeRow, planeCol, cellSize);
         this.cellSize = cellSize;
-        this.touchedCells = new HashSet<>();
+        this.touchedCells = new ArrayList<>();
+        this.touchedCellBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.pink);
+        this.touchedCellBitmap = Bitmap.createScaledBitmap(touchedCellBitmap, cellSize,cellSize, true);
+        this.backgrounfdBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.bg_water);
+        this.backgrounfdBitmap = Bitmap.createScaledBitmap(backgrounfdBitmap, Constans.SCREEN_WIDTH, Constans.SCREEN_HEIGHT, true);
     }
 
     public void draw(Canvas canvas) {
@@ -31,7 +42,7 @@ public class GameEngine {
             return;
         }
         //Рисуем поле
-        canvas.drawColor(Color.WHITE);
+        canvas.drawBitmap(backgrounfdBitmap, 0, 0, paint);
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Color.BLACK);
         for (int row = 0; row < Constans.ROWS; row++) {
@@ -44,25 +55,33 @@ public class GameEngine {
             }
         }
         //Рисуем выделенные клетки
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.BLUE);
-        for (String cell : touchedCells) {
-            String[] parts = cell.split(",");
-            int row = Integer.parseInt(parts[0]);
-            int col = Integer.parseInt(parts[1]);
+        for (int[] cell : touchedCells) {
+            int row = cell[0];
+            int col = cell[1];
             int left = col * cellSize;
             int top = row * cellSize;
-            int right = left + cellSize;
-            int bottom = top + cellSize;
-            canvas.drawRect(left, top, right, bottom, paint);
+            canvas.drawBitmap(touchedCellBitmap, left, top, paint);
         }
         //Рисуем самолет
         plane.draw(canvas);
     }
     //Собираем маршрут для самолета
     public void handleTouchEvent(int row, int col) {
-        String cell = row + "," + col;
-        touchedCells.add(cell);
+        if(row >= 0 && row < Constans.ROWS && col >= 0 && col < Constans.COLS) {
+            int[] cell = {row, col};
+            if(!isCellValidate(row, col)) {
+                touchedCells.add(cell);
+            }
+        }
+    }
+    //Проверяем можно ли зайти в клетку
+    private boolean isCellValidate(int row, int col) {
+        for(int[] cell : touchedCells) {
+            if (cell[0] == row && cell[1] == col) {
+                return true;
+            }
+        }
+        return false;
     }
     //Тыркаем по самолету
     public boolean handlePlaneTouchEvent(int row, int col) {
@@ -70,56 +89,36 @@ public class GameEngine {
     }
     //Начинам движение самолета
     public void startPlaneMovement() {
-        path = new ArrayList<>();
-        for (String cell : touchedCells) {
-            String[] parts = cell.split(",");
-            int row = Integer.parseInt(parts[0]);
-            int col = Integer.parseInt(parts[1]);
-            path.add(new int[]{row, col});
-        }
-        //Проверяем можем ли мы начинать движение
-        if (isPathContinuous() && startsFromPlane()) {
-            isPlaneMoving = true;
-            pathIndex = 0;
-            movePlane();
-        } else {
-            touchedCells.clear();
-        }
+        path = new ArrayList<>(touchedCells);
+        isPlaneMoving = true;
+        pathIndex = 0;
+        movePlane();
     }
-    //Проверяем непрерывность маршрута
-    private boolean isPathContinuous() {
-        for (int i = 1; i < path.size(); i++) {
-            int[] prev = path.get(i - 1);
-            int[] curr = path.get(i);
-            if (Math.abs(prev[0] - curr[0]) + Math.abs(prev[1] - curr[1]) > 1) {
-                return false;
-            }
-        }
-        return true;
-    }
-    //Проверяем начинается ли маршрут от самолета
-    private boolean startsFromPlane() {
-        if (path.isEmpty()) {
-            return false;
-        }
-        //Считываем позицию самолета и сравниваем с началом маршрута
-        int[] firstCell = path.get(0);
-        return firstCell[0] == plane.getRow() && firstCell[1] == plane.getCol();
-    }
-
     public void movePlane() {
+        isPlaneMoving = true;
         if(pathIndex < path.size()) {
-            plane.movePlane(path, pathIndex);
+            int[] nextCell = path.get(pathIndex);
+            if(!isAdjecent(plane.getRow(), plane.getCol(), nextCell[0], nextCell[1])) {
+                isPlaneMoving = false;
+                touchedCells.clear();
+                return;
+            }
+            plane.setPosition(nextCell[0], nextCell[1]);
             pathIndex++;
+            sleep(65L);
         }
         else {
             isPlaneMoving = false;
             touchedCells.clear();
-            //Устанавливаем последние местоположение самолета
-            int[] lastCell = path.get(path.size() - 1);
-            plane.setPosition(lastCell[0], lastCell[1]);
         }
     }
+    //Проверяем можем ли идти в следующую ячейку
+    private boolean isAdjecent(int row1, int col1, int row2, int col2) {
+        int rowDiff = Math.abs(row1 - row2);
+        int colDiff = Math.abs(col1 - col2);
+        return !(rowDiff > 1 || colDiff > 1);
+    }
+
     public void update() {
         if(isPlaneMoving) {
             movePlane();

@@ -83,7 +83,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
                 gameEngine.startPlaneMovement();
             }
         }
-
         return true;
     }
 
