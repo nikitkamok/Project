@@ -2,39 +2,43 @@ package com.example.planegame;
 
 import static android.os.SystemClock.sleep;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class GameEngine {
+    private final Context context;
     private final int cellSize;
     private final Paint paint;
     private final Plane plane;
-    private int planeRow = 5, planeCol = 5;
+    private final GameBoard gameBoard;
+    private int[][] board;
     private final List<int[]> touchedCells;
     private boolean isPlaneMoving = false;
+    private boolean isRunning;
     private List<int[]> path;
     private int pathIndex = 0;
 
     private Bitmap touchedCellBitmap;
-    private Bitmap backgrounfdBitmap;
 
     public GameEngine(Context context, int cellSize) {
+        this.context = context;
         this.paint = new Paint();
-        this.plane = new Plane(context, planeRow, planeCol, cellSize);
         this.cellSize = cellSize;
+        this.isRunning = true;
+        this.plane = new Plane(context, 0, 0, cellSize);
         this.touchedCells = new ArrayList<>();
         this.touchedCellBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.pink);
         this.touchedCellBitmap = Bitmap.createScaledBitmap(touchedCellBitmap, cellSize,cellSize, true);
-        this.backgrounfdBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.bg_water);
-        this.backgrounfdBitmap = Bitmap.createScaledBitmap(backgrounfdBitmap, Constans.SCREEN_WIDTH, Constans.SCREEN_HEIGHT, true);
+        board = new int[Constans.ROWS][Constans.COLS];
+        this.gameBoard = new GameBoard(context, board, cellSize);
     }
 
     public void draw(Canvas canvas) {
@@ -42,34 +46,30 @@ public class GameEngine {
             return;
         }
         //Рисуем поле
-        canvas.drawBitmap(backgrounfdBitmap, 0, 0, paint);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.BLACK);
-        for (int row = 0; row < Constans.ROWS; row++) {
-            for (int col = 0; col < Constans.COLS; col++) {
-                int left = col * cellSize;
-                int top = row * cellSize;
-                int right = left + cellSize;
-                int bottom = top + cellSize;
-                canvas.drawRect(left, top, right, bottom, paint);
-            }
-        }
+        gameBoard.draw(canvas, board);
         //Рисуем выделенные клетки
         for (int[] cell : touchedCells) {
             int row = cell[0];
             int col = cell[1];
-            int left = col * cellSize;
-            int top = row * cellSize;
-            canvas.drawBitmap(touchedCellBitmap, left, top, paint);
+            if(board[row][col] != 2) {
+                int left = col * cellSize;
+                int top = row * cellSize;
+                canvas.drawBitmap(touchedCellBitmap, left, top, paint);
+            }
         }
-        //Рисуем самолет
         plane.draw(canvas);
     }
     //Собираем маршрут для самолета
     public void handleTouchEvent(int row, int col) {
         if(row >= 0 && row < Constans.ROWS && col >= 0 && col < Constans.COLS) {
             int[] cell = {row, col};
-            if(!isCellValidate(row, col)) {
+            if(isCellValidate(row, col)) {
+                if (!touchedCells.isEmpty()) {
+                    int[] lastCell = touchedCells.get(touchedCells.size() - 1);
+                    if (board[lastCell[0]][lastCell[1]] == 1) {
+                        return; //Если предыдущая ячейка финишная, не добавляем новую ячейку
+                    }
+                }
                 touchedCells.add(cell);
             }
         }
@@ -77,11 +77,11 @@ public class GameEngine {
     //Проверяем можно ли зайти в клетку
     private boolean isCellValidate(int row, int col) {
         for(int[] cell : touchedCells) {
-            if (cell[0] == row && cell[1] == col) {
-                return true;
+            if (cell[0] == row && cell[1] == col || board[row][col] == 2) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
     //Тыркаем по самолету
     public boolean handlePlaneTouchEvent(int row, int col) {
@@ -94,6 +94,7 @@ public class GameEngine {
         pathIndex = 0;
         movePlane();
     }
+    //Движение самолета
     public void movePlane() {
         isPlaneMoving = true;
         if(pathIndex < path.size()) {
@@ -116,12 +117,48 @@ public class GameEngine {
     private boolean isAdjecent(int row1, int col1, int row2, int col2) {
         int rowDiff = Math.abs(row1 - row2);
         int colDiff = Math.abs(col1 - col2);
-        return !(rowDiff > 1 || colDiff > 1);
+        //Проверяем чтобы маршрут начинался с самолета
+        if(pathIndex == 0) {
+            return rowDiff == 0 && colDiff == 0;
+        }
+        //Проверяем можем ли мы идти дальше по маршруту
+        else {
+            return rowDiff == 1 && colDiff == 0 || rowDiff == 0 && colDiff == 1;
+        }
     }
 
+    public void setBoard(int[][] board) {
+        this.board = board;
+        this.gameBoard.updateBoard(board);
+    }
+
+    public void setPlanePosition(int row, int col) {
+        plane.setPosition(row, col);
+    }
+
+    //Обновляем картинку
     public void update() {
+        if(!isRunning) {
+            return;
+        }
         if(isPlaneMoving) {
             movePlane();
+        }
+        if(checkFinish()) {
+            endGame();
+        }
+    }
+
+    private boolean checkFinish() {
+        return board[plane.getRow()][plane.getCol()] == 1;
+    }
+
+    private void endGame() {
+        isRunning = false;
+        if(context instanceof Activity) {
+            Activity activity = (Activity) context;
+            Intent intent = new Intent(context, GameLevels.class);
+            context.startActivity(intent); activity.finish();
         }
     }
 }

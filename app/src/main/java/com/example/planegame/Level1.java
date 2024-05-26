@@ -11,7 +11,8 @@ import android.widget.LinearLayout;
 
 public class Level1 extends AppCompatActivity {
 
-    private static boolean isPause = false;
+    private Game gameView;
+    private static final boolean isPause = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,9 +20,27 @@ public class Level1 extends AppCompatActivity {
         getWindow().getDecorView().getWindowInsetsController().hide(
                 android.view.WindowInsets.Type.navigationBars() //спрятать меню навигации
         );
-        LayoutInflater factory = LayoutInflater.from(this);
-        View Game = factory.inflate(R.layout.universal, null);
-        setContentView(Game);
+        // LayoutInflater factory = LayoutInflater.from(this);
+        // View Game = factory.inflate(R.layout.universal, null);
+        setContentView(R.layout.universal);
+        gameView = findViewById(R.id.game);
+
+        if (gameView != null) {
+            int[][] board = new int[][]{
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0},
+                    {0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0},
+                    {0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0},
+                    {0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 0},
+                    {0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0}
+            };
+            gameView.setBoard(board);
+
+            // Устанавливаем начальную позицию самолета
+            gameView.setPlanePosition(0, 0);
+        }
 
         //объявление объектов уровня
         Button buttonPauseMenu = findViewById(R.id.levels_pauseMenuBtn);

@@ -14,6 +14,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private GameThread gameThread;
     private GameEngine gameEngine;
     private int cellSize;
+    private int[][] board;
+    private int planeRow, planeCol;
 
     public Game(Context context) {
         super(context);
@@ -40,6 +42,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         cellSize = Math.min(Constans.SCREEN_WIDTH / Constans.COLS, Constans.SCREEN_HEIGHT / Constans.ROWS);
 
         gameEngine = new GameEngine(getContext(), cellSize);
+        if(board != null) {
+            gameEngine.setBoard(board);
+        }
+        gameEngine.setPlanePosition(planeRow, planeCol);
+
         gameThread = new GameThread(holder, this);
         gameThread.setRunning(true);
         gameThread.start();
@@ -84,6 +91,21 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
         return true;
+    }
+
+    public void setBoard(int[][] board) {
+        this.board = board;
+        if (gameEngine != null) {
+            gameEngine.setBoard(board);
+        }
+    }
+
+    public void setPlanePosition(int row, int col) {
+        this.planeRow = row;
+        this.planeCol = col;
+        if (gameEngine != null) {
+            gameEngine.setPlanePosition(row, col);
+        }
     }
 
     public void update() {

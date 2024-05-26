@@ -2,7 +2,6 @@ package com.example.planegame;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -19,8 +18,8 @@ public class GameLevels extends AppCompatActivity {
         );
         setContentView(R.layout.gamelevels);
         //объявление объектов меню уровней
-        Button buttonBack = (Button) findViewById(R.id.gamelevels_buttonBack);
-        TextView level1 = (TextView) findViewById(R.id.gamelevels_level1);
+        Button buttonBack = findViewById(R.id.gamelevels_buttonBack);
+        TextView level1 = findViewById(R.id.gamelevels_level1);
 
         //переход из меню уровней в главное меню
         buttonBack.setOnClickListener(v -> {
