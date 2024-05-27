@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameEngine {
+    private Game game;
     private final Context context;
     private final int cellSize;
     private final Paint paint;
@@ -52,9 +53,9 @@ public class GameEngine {
             int row = cell[0];
             int col = cell[1];
             if(board[row][col] != 2) {
-                int left = col * cellSize;
-                int top = row * cellSize;
-                canvas.drawBitmap(touchedCellBitmap, left, top, paint);
+                double left = col * cellSize;
+                double top = row * cellSize;
+                canvas.drawBitmap(touchedCellBitmap, (float)left, (float)top, paint);
             }
         }
         plane.draw(canvas);
@@ -126,14 +127,35 @@ public class GameEngine {
             return rowDiff == 1 && colDiff == 0 || rowDiff == 0 && colDiff == 1;
         }
     }
-
+    //Раставляем объекты
     public void setBoard(int[][] board) {
         this.board = board;
         this.gameBoard.updateBoard(board);
     }
-
+    //Устанавливаем позицию самолета
     public void setPlanePosition(int row, int col) {
         plane.setPosition(row, col);
+    }
+
+    //Проверяем достигли ли мы финиша
+    private boolean checkFinish() {
+        return board[plane.getRow()][plane.getCol()] == 1;
+    }
+    //Заканчиваем действия игры и переходим в меню
+    public void endGame() {
+        isRunning = false;
+        isPlaneMoving = false;
+        touchedCells.clear();
+        if(context instanceof Activity) {
+            Activity activity = (Activity) context;
+            Intent intent = new Intent(context, GameLevels.class);
+            context.startActivity(intent); activity.finish();
+        }
+        game.surfaceDestroyed(game.getHolder());
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     //Обновляем картинку
@@ -146,19 +168,6 @@ public class GameEngine {
         }
         if(checkFinish()) {
             endGame();
-        }
-    }
-
-    private boolean checkFinish() {
-        return board[plane.getRow()][plane.getCol()] == 1;
-    }
-
-    private void endGame() {
-        isRunning = false;
-        if(context instanceof Activity) {
-            Activity activity = (Activity) context;
-            Intent intent = new Intent(context, GameLevels.class);
-            context.startActivity(intent); activity.finish();
         }
     }
 }

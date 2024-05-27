@@ -25,55 +25,14 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/levels_pauseMenuBtn"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/btn_pause_state_pressed" />
+                android:id="@+id/levels_backToMenuBtn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/btn_back_state_pressed" />
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/levels_container3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/levels_container4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="invisible">
-
-            <Button
-                android:id="@+id/levels_resetLevelBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Reset" />
-
-            <Button
-                android:id="@+id/levels_settingsBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="settings" />
-
-            <Button
-                android:id="@+id/levels_resumePauseBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Resume" />
-
-            <Button
-                android:id="@+id/levels_exitBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Exit" />
-
-        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>

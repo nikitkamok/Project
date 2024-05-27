@@ -39,9 +39,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
-        cellSize = Math.min(Constans.SCREEN_WIDTH / Constans.COLS, Constans.SCREEN_HEIGHT / Constans.ROWS);
+        cellSize = Constans.SCREEN_HEIGHT / Constans.ROWS;
 
         gameEngine = new GameEngine(getContext(), cellSize);
+        gameEngine.setGame(this);
         if(board != null) {
             gameEngine.setBoard(board);
         }
@@ -111,4 +112,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public void update() {
         gameEngine.update();
     }
+
+    public GameEngine getGameEngine() {
+        return gameEngine;
+    }
+
 }

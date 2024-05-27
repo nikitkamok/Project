@@ -1,13 +1,13 @@
 package com.example.planegame;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.Objects;
 
-public class Level1 extends AppCompatActivity {
+public class Level2 extends AppCompatActivity {
 
     private Game gameView;
 
@@ -37,7 +37,7 @@ public class Level1 extends AppCompatActivity {
             gameView.setBoard(board);
 
             // Устанавливаем начальную позицию самолета
-            gameView.setPlanePosition(1, 2);
+            gameView.setPlanePosition(5, 5);
         }
 
         //объявление объектов уровня
