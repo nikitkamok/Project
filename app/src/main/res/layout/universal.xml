@@ -35,4 +35,37 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/levels_container3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top|left"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/levels_container4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/levels_coin"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:src="@drawable/coin" />
+
+            <TextView
+                android:id="@+id/coin_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="0"
+                android:textSize="24sp"
+                android:textColor="@color/black"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
+
 </FrameLayout>

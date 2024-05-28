@@ -1,7 +1,9 @@
 package com.example.planegame;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -40,14 +42,13 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
         cellSize = Constans.SCREEN_HEIGHT / Constans.ROWS;
-
+        //Создаем игровой процесс
         gameEngine = new GameEngine(getContext(), cellSize);
-        gameEngine.setGame(this);
         if(board != null) {
             gameEngine.setBoard(board);
         }
         gameEngine.setPlanePosition(planeRow, planeCol);
-
+        //Запускаем поток
         gameThread = new GameThread(holder, this);
         gameThread.setRunning(true);
         gameThread.start();
@@ -59,6 +60,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
+        //Чистим память и останавливаем поток
         boolean retry = true;
         gameThread.setRunning(false);
         while (retry) {
@@ -75,17 +77,18 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         gameEngine.draw(canvas);
     }
 
+    //Считываем клетки до которых коснулись и делаем дела
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int col = (int) (event.getX() / cellSize);
         int row = (int) (event.getY() / cellSize);
-
+        //Проводим маршрут
         if (event.getAction() == MotionEvent.ACTION_MOVE || event.getAction() == MotionEvent.ACTION_DOWN) {
             gameEngine.handleTouchEvent(row, col);
             invalidate();
         }
-
+        //Запускаем самолет
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (gameEngine.handlePlaneTouchEvent(row, col)) {
                 gameEngine.startPlaneMovement();
@@ -93,14 +96,14 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         }
         return true;
     }
-
+    //Делаем игровое поле
     public void setBoard(int[][] board) {
         this.board = board;
         if (gameEngine != null) {
             gameEngine.setBoard(board);
         }
     }
-
+    //Устанавливаем позицию самолета
     public void setPlanePosition(int row, int col) {
         this.planeRow = row;
         this.planeCol = col;
@@ -116,5 +119,4 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public GameEngine getGameEngine() {
         return gameEngine;
     }
-
 }

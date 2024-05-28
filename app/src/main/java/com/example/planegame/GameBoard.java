@@ -12,6 +12,7 @@ public class GameBoard {
     private final int cellSize;
     private final Paint paint;
     private final Barrier barrier;
+    private final Coin coin;
     private Bitmap backgroundBitmap;
     private Bitmap finishBitmap;
 
@@ -20,6 +21,7 @@ public class GameBoard {
         this.cellSize = cellSize;
         this.paint = new Paint();
         this.barrier = new Barrier(context, 0, 0, cellSize);
+        this.coin = new Coin(context, 0, 0, cellSize);
         this.backgroundBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.bg_water);
         this.backgroundBitmap = Bitmap.createScaledBitmap(backgroundBitmap, Constans.SCREEN_WIDTH, Constans.SCREEN_HEIGHT, true);
         this.finishBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.finish);
@@ -43,15 +45,22 @@ public class GameBoard {
                 int top = row * cellSize;
                 int right = left + cellSize;
                 int bottom = top + cellSize;
-                canvas.drawRect(left, top, right, bottom, paint);
-
-                if(board[row][col] == 1) {
-                    canvas.drawBitmap(finishBitmap, left, top, paint);
-                }
-
-                if(board[row][col] == 2) {
-                    barrier.setPosition(row, col);
-                    barrier.draw(canvas);
+                //Рисуем на поле
+                switch (board[row][col]) {
+                    case 1: //Рисуем финиш
+                        canvas.drawBitmap(finishBitmap, left, top, paint);
+                        break;
+                    case 2: //Рисуем барьеры
+                        barrier.setPosition(row, col);
+                        barrier.draw(canvas);
+                        break;
+                    case 3: //Рисуем монеты
+                        coin.setPosition(row, col);
+                        coin.draw(canvas);
+                        break;
+                    default: //Рисуем клеточки
+                        canvas.drawRect(left, top, right, bottom, paint);
+                        break;
                 }
             }
         }

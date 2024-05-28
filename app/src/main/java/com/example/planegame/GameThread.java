@@ -4,8 +4,8 @@ import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
 public class GameThread extends Thread {
-    private Game game;
-    private SurfaceHolder surfaceHolder;
+    private final Game game;
+    private final SurfaceHolder surfaceHolder;
     private boolean running;
 
     public GameThread(SurfaceHolder surfaceHolder, Game game) {
@@ -24,9 +24,9 @@ public class GameThread extends Thread {
             Canvas canvas = null;
             try {
                 canvas = surfaceHolder.lockCanvas();
-                if(canvas != null) {
-                    synchronized (surfaceHolder) {
-                        game.update();
+                synchronized (surfaceHolder) {
+                    game.update();
+                    if(canvas != null) {
                         game.drawGameBoard(canvas);
                     }
                 }
