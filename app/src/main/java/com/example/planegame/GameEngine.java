@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Handler;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -149,6 +150,10 @@ public class GameEngine {
 
     }
 
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
     //Раставляем объекты
     public void setBoard(int[][] board) {
         this.board = board;
@@ -162,25 +167,18 @@ public class GameEngine {
 
     //Проверяем достигли ли мы финиша
     private boolean checkFinish() {
-        return board[plane.getRow()][plane.getCol()] == 1;
-    }
-
-    //Заканчиваем действия игры и переходим в меню
-    public void endGame() {
-        game.surfaceDestroyed(game.getHolder());
-
-        if (context instanceof Activity) {
-            Activity activity = (Activity) context;
-            Intent intent = new Intent(context, GameLevels.class);
-            context.startActivity(intent);
-            activity.finish();
-        }
+        return board[plane.getRow()][plane.getCol()] == 4;
     }
 
     //Обновляем картинку
     public void update() {
         if(checkFinish()) {
-            endGame();
+            isPlaneMoving = false;
+            touchedCells.clear();
+            if(!path.isEmpty()) {
+                path.clear();
+            }
+            game.endGame();
         }
         if(isPlaneMoving) {
             movePlane();

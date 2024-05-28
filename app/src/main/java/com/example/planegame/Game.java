@@ -44,6 +44,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         cellSize = Constans.SCREEN_HEIGHT / Constans.ROWS;
         //Создаем игровой процесс
         gameEngine = new GameEngine(getContext(), cellSize);
+        gameEngine.setGame(this);
         if(board != null) {
             gameEngine.setBoard(board);
         }
@@ -52,6 +53,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         gameThread = new GameThread(holder, this);
         gameThread.setRunning(true);
         gameThread.start();
+        //Время
+
     }
 
     @Override
@@ -112,11 +115,14 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
-    public void update() {
-        gameEngine.update();
+    public void endGame() {
+        gameThread.setRunning(false);
+        Intent intent = new Intent(getContext(), GameLevels.class);
+        getContext().startActivity(intent);
+        ((Activity)getContext()).finish();
     }
 
-    public GameEngine getGameEngine() {
-        return gameEngine;
+    public void update() {
+        gameEngine.update();
     }
 }

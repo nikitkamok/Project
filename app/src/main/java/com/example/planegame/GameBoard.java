@@ -47,9 +47,6 @@ public class GameBoard {
                 int bottom = top + cellSize;
                 //Рисуем на поле
                 switch (board[row][col]) {
-                    case 1: //Рисуем финиш
-                        canvas.drawBitmap(finishBitmap, left, top, paint);
-                        break;
                     case 2: //Рисуем барьеры
                         barrier.setPosition(row, col);
                         barrier.draw(canvas);
@@ -57,6 +54,9 @@ public class GameBoard {
                     case 3: //Рисуем монеты
                         coin.setPosition(row, col);
                         coin.draw(canvas);
+                        break;
+                    case 4: //Рисуем финиш
+                        canvas.drawBitmap(finishBitmap, left, top, paint);
                         break;
                     default: //Рисуем клеточки
                         canvas.drawRect(left, top, right, bottom, paint);
