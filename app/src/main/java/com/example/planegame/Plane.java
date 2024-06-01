@@ -18,13 +18,13 @@ public class Plane {
         this.col = initialCol;
         this.cellSize = cellSize;
         this.paint = new Paint();
-        this.planeBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.plane);
-        this.planeBitmap = Bitmap.createScaledBitmap(planeBitmap, cellSize, cellSize, false);
+        this.planeBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ufo);
+        this.planeBitmap = Bitmap.createScaledBitmap(planeBitmap, (int) ((float)cellSize * 1.2), (int) ((float)cellSize * 1.2), false);
     }
 
     public void draw(Canvas canvas) {
-        int left = col * cellSize;
-        int top = row * cellSize;
+        int left = col * cellSize - (int) ((float)cellSize * 0.1);
+        int top = row * cellSize - (int) ((float)cellSize * 0.1);
         canvas.drawBitmap(planeBitmap, left, top, paint);
     }
 

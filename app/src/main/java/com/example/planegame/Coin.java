@@ -18,12 +18,12 @@ public class Coin {
         this.cellSize = cellSize;
         this.paint = new Paint();
         this.coinBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.coin);
-        this.coinBitmap = Bitmap.createScaledBitmap(coinBitmap, cellSize, cellSize, false);
+        this.coinBitmap = Bitmap.createScaledBitmap(coinBitmap, cellSize - 30, cellSize - 30, false);
     }
 
     public void draw(Canvas canvas) {
-        int left = col * cellSize;
-        int top = row * cellSize;
+        int left = col * cellSize + 15;
+        int top = row * cellSize + 15;
         canvas.drawBitmap(coinBitmap, left, top, paint);
     }
 

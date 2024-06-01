@@ -22,8 +22,9 @@ public class GameBoard {
         this.paint = new Paint();
         this.barrier = new Barrier(context, 0, 0, cellSize);
         this.coin = new Coin(context, 0, 0, cellSize);
-        this.backgroundBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.bg_water);
-        this.backgroundBitmap = Bitmap.createScaledBitmap(backgroundBitmap, Constans.SCREEN_WIDTH, Constans.SCREEN_HEIGHT, true);
+        this.backgroundBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.bg_water_1);
+        this.backgroundBitmap = Bitmap.createScaledBitmap(backgroundBitmap,  (int) ((float)Constans.SCREEN_WIDTH * 1.1), (int) ((float)Constans.SCREEN_HEIGHT * 1.1) , true);
+        //this.backgroundBitmap = Bitmap.createScaledBitmap(backgroundBitmap,  Constans.SCREEN_WIDTH, Constans.SCREEN_HEIGHT , true);
         this.finishBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.finish);
         this.finishBitmap = Bitmap.createScaledBitmap(finishBitmap, cellSize, cellSize, true);
     }

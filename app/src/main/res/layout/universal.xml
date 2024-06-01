@@ -81,8 +81,8 @@
 
             <ImageView
                 android:id="@+id/levels_coin"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:src="@drawable/coin" />
@@ -91,7 +91,7 @@
                 android:id="@+id/coin_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="3dp"
                 android:text="0"
                 android:fontFamily="@font/comic_sans_ms_pixel_rus_eng"
                 android:textSize="30sp"
@@ -120,8 +120,7 @@
                 android:text="00:00"
                 android:fontFamily="@font/comic_sans_ms_pixel_rus_eng"
                 android:textSize="35sp"
-                android:textColor="@color/black95"
-                android:layout_margin="5dp" />
+                android:textColor="@color/black95" />
         </LinearLayout>
     </LinearLayout>
 

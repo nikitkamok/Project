@@ -17,13 +17,13 @@ public class Barrier {
         this.col = initialCol;
         this.cellSize = cellSize;
         this.paint = new Paint();
-        this.barrierBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.barrier);
-        this.barrierBitmap = Bitmap.createScaledBitmap(barrierBitmap, cellSize, cellSize, false);
+        this.barrierBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.cloud);
+        this.barrierBitmap = Bitmap.createScaledBitmap(barrierBitmap, (int) ((float)cellSize * 1.2), (int) ((float)cellSize * 1.2), false);
     }
 
     public void draw(Canvas canvas) {
-        int left = col * cellSize;
-        int top = row * cellSize;
+        int left = col * cellSize - (int) ((float)cellSize * 0.15);
+        int top = row * cellSize - (int) ((float)cellSize * 0.15);
         canvas.drawBitmap(barrierBitmap, left, top, paint);
     }
 

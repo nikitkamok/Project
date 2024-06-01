@@ -41,7 +41,23 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
-        cellSize = Constans.SCREEN_HEIGHT / Constans.ROWS;
+        int minSize = Math.min(Constans.SCREEN_WIDTH / Constans.COLS, Constans.SCREEN_HEIGHT / Constans.ROWS),
+        maxSize = Math.max(Constans.SCREEN_WIDTH / Constans.COLS, Constans.SCREEN_HEIGHT / Constans.ROWS), m;
+////        while(minSize + 1 < maxSize){
+////            m = (maxSize + minSize) / 2;
+////            if(m * Constans.ROWS > Constans.SCREEN_WIDTH || m * Constans.COLS > Constans.SCREEN_HEIGHT){
+////                maxSize = m;
+////            }
+////            else{
+////                minSize = m;
+////            }
+////        }
+        if(maxSize * Constans.ROWS > Constans.SCREEN_HEIGHT || maxSize * Constans.COLS > Constans.SCREEN_WIDTH){
+            cellSize = minSize;
+        }
+        else{
+            cellSize = maxSize;
+        }
         //Создаем игровой процесс
         gameEngine = new GameEngine(getContext(), cellSize);
         gameEngine.setGame(this);
