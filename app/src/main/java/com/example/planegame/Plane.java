@@ -8,18 +8,20 @@ import android.graphics.Paint;
 import java.util.List;
 
 public class Plane {
+    Context context;
     private int cellSize;
     private int row, col;
     private Paint paint;
     private Bitmap planeBitmap;
 
     public Plane(Context context, int initialRow, int initialCol, int cellSize) {
+        this.context = context;
         this.row = initialRow;
         this.col = initialCol;
         this.cellSize = cellSize;
         this.paint = new Paint();
         this.planeBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ufo);
-        this.planeBitmap = Bitmap.createScaledBitmap(planeBitmap, (int) ((float)cellSize * 1.2), (int) ((float)cellSize * 1.2), false);
+        this.planeBitmap = Bitmap.createScaledBitmap(planeBitmap, (int) ((float)cellSize * 1.1), (int) ((float)cellSize * 1.1), false);
     }
 
     public void draw(Canvas canvas) {
@@ -40,4 +42,5 @@ public class Plane {
     public int getCol() {
         return col;
     }
+
 }

@@ -4,12 +4,11 @@ import static android.os.SystemClock.sleep;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.os.Handler;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -31,18 +30,21 @@ public class GameEngine {
     //Маршрут
     private final List<int[]> touchedCells;
     private Bitmap touchedCellBitmap;
-    //обработка маршрута
+    //Обработка маршрута
     private List<int[]> path;
     private int pathIndex = 0;
+    //Маштабирование
+    private Matrix matrix;
 
     public GameEngine(Context context, int cellSize) {
         this.context = context;
         this.paint = new Paint();
         this.cellSize = cellSize;
+        this.matrix = new Matrix();
         this.plane = new Plane(context, 0, 0, cellSize);
         this.touchedCells = new ArrayList<>();
         this.touchedCellBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.pink);
-        this.touchedCellBitmap = Bitmap.createScaledBitmap(touchedCellBitmap, cellSize,cellSize, true);
+        this.touchedCellBitmap = Bitmap.createScaledBitmap(touchedCellBitmap, cellSize,cellSize, false);
         board = new int[Constans.ROWS][Constans.COLS];
         this.gameBoard = new GameBoard(context, board, cellSize);
     }
@@ -51,6 +53,8 @@ public class GameEngine {
         if(canvas == null) {
             return;
         }
+        canvas.save();
+        canvas.concat(matrix);
         //Рисуем поле
         gameBoard.draw(canvas, board);
         //Рисуем выделенные клетки
@@ -64,9 +68,12 @@ public class GameEngine {
             }
         }
         plane.draw(canvas);
+
+        canvas.restore();
     }
     //Собираем маршрут для самолета
     public void handleTouchEvent(int row, int col) {
+        //Проверяем что мы находимся в поле
         if(row >= 0 && row < Constans.ROWS && col >= 0 && col < Constans.COLS) {
             int[] cell = {row, col};
             if(isCellValidate(row, col)) {
@@ -148,6 +155,10 @@ public class GameEngine {
             }
         }
 
+    }
+
+    public void setMatrix(Matrix matrix) {
+        this.matrix = matrix;
     }
 
     public void setGame(Game game) {

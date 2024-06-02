@@ -100,14 +100,14 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_margin="10dp"
-                    android:background="@drawable/btn_stats_state_pressed" />
+                    android:background="@drawable/btn_settings_state_pressed" />
 
                 <Button
                     android:id="@+id/main_buttonStats"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_margin="10dp"
-                    android:background="@drawable/btn_settings_state_pressed" />
+                    android:background="@drawable/btn_stats_state_pressed" />
             </LinearLayout>
         </LinearLayout>
 

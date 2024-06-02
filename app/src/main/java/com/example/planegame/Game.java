@@ -5,8 +5,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -19,45 +22,40 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private int[][] board;
     private int planeRow, planeCol;
 
+    //Добавляем переменные для хранения фактора масштабирования и смещения
+    private float scaleFactor = 1.0f;
+    private float minScaleFactor = 1.0f;
+    private float maxScaleFactor = 1.5f;
+    private float focusX = 0;
+    private float focusY = 0;
+    private Matrix matrix = new Matrix();
+    private ScaleGestureDetector scaleGestureDetector;
+
     public Game(Context context) {
         super(context);
-        init();
+        init(context);
     }
 
     public Game(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(context);
     }
 
     public Game(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(context);
     }
 
-    private void init() {
+    private void init(Context context) {
         SurfaceHolder holder = getHolder();
         holder.addCallback(this);
+
+        scaleGestureDetector = new ScaleGestureDetector(context, new ScaleListener());
     }
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
-        int minSize = Math.min(Constans.SCREEN_WIDTH / Constans.COLS, Constans.SCREEN_HEIGHT / Constans.ROWS),
-        maxSize = Math.max(Constans.SCREEN_WIDTH / Constans.COLS, Constans.SCREEN_HEIGHT / Constans.ROWS), m;
-////        while(minSize + 1 < maxSize){
-////            m = (maxSize + minSize) / 2;
-////            if(m * Constans.ROWS > Constans.SCREEN_WIDTH || m * Constans.COLS > Constans.SCREEN_HEIGHT){
-////                maxSize = m;
-////            }
-////            else{
-////                minSize = m;
-////            }
-////        }
-        if(maxSize * Constans.ROWS > Constans.SCREEN_HEIGHT || maxSize * Constans.COLS > Constans.SCREEN_WIDTH){
-            cellSize = minSize;
-        }
-        else{
-            cellSize = maxSize;
-        }
+        cellSize = Math.max(Constans.SCREEN_WIDTH / Constans.COLS, Constans.SCREEN_HEIGHT / Constans.ROWS);
         //Создаем игровой процесс
         gameEngine = new GameEngine(getContext(), cellSize);
         gameEngine.setGame(this);
@@ -69,8 +67,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         gameThread = new GameThread(holder, this);
         gameThread.setRunning(true);
         gameThread.start();
-        //Время
-
     }
 
     @Override
@@ -93,28 +89,58 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void drawGameBoard(Canvas canvas) {
+        canvas.save();
+        canvas.setMatrix(matrix);
         gameEngine.draw(canvas);
+        canvas.restore();
     }
 
     //Считываем клетки до которых коснулись и делаем дела
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int col = (int) (event.getX() / cellSize);
-        int row = (int) (event.getY() / cellSize);
-        //Проводим маршрут
-        if (event.getAction() == MotionEvent.ACTION_MOVE || event.getAction() == MotionEvent.ACTION_DOWN) {
-            gameEngine.handleTouchEvent(row, col);
-            invalidate();
+        if (event.getPointerCount() > 1) {
+            scaleGestureDetector.onTouchEvent(event);
         }
-        //Запускаем самолет
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (gameEngine.handlePlaneTouchEvent(row, col)) {
-                gameEngine.startPlaneMovement();
+        else {
+            float[] touchPoint = {event.getX(), event.getY()};
+            Matrix inverse = new Matrix();
+            matrix.invert(inverse);
+            inverse.mapPoints(touchPoint);
+
+            int col = (int) touchPoint[0] / cellSize;
+            int row = (int) touchPoint[1] / cellSize;
+            //Проводим маршрут
+            if (event.getAction() == MotionEvent.ACTION_MOVE || event.getAction() == MotionEvent.ACTION_DOWN) {
+                gameEngine.handleTouchEvent(row, col);
+                invalidate();
+            }
+            //Запускаем самолет
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                if (gameEngine.handlePlaneTouchEvent(row, col)) {
+                    gameEngine.startPlaneMovement();
+                }
             }
         }
         return true;
     }
+
+    //Класс слушателя для обработки жеста масштабирования
+    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+            scaleFactor *= detector.getScaleFactor();
+            scaleFactor = Math.max(minScaleFactor, Math.min(scaleFactor, maxScaleFactor));
+            focusX = detector.getFocusX();
+            focusY = detector.getFocusY();
+            matrix.reset();
+            matrix.postScale(scaleFactor, scaleFactor, focusX, focusY);
+            gameEngine.setMatrix(matrix); //Передаем матрицу в движок
+            invalidate();
+            return true;
+        }
+    }
+
     //Делаем игровое поле
     public void setBoard(int[][] board) {
         this.board = board;
@@ -122,6 +148,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             gameEngine.setBoard(board);
         }
     }
+
     //Устанавливаем позицию самолета
     public void setPlanePosition(int row, int col) {
         this.planeRow = row;
@@ -131,6 +158,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
+    //Завершаем игру
     public void endGame() {
         gameThread.setRunning(false);
         Intent intent = new Intent(getContext(), GameLevels.class);
