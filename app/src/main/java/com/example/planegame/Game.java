@@ -135,7 +135,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             focusY = detector.getFocusY();
             matrix.reset();
             matrix.postScale(scaleFactor, scaleFactor, focusX, focusY);
-            gameEngine.setMatrix(matrix); //Передаем матрицу в движок
             invalidate();
             return true;
         }

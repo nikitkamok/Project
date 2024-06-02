@@ -33,14 +33,11 @@ public class GameEngine {
     //Обработка маршрута
     private List<int[]> path;
     private int pathIndex = 0;
-    //Маштабирование
-    private Matrix matrix;
 
     public GameEngine(Context context, int cellSize) {
         this.context = context;
         this.paint = new Paint();
         this.cellSize = cellSize;
-        this.matrix = new Matrix();
         this.plane = new Plane(context, 0, 0, cellSize);
         this.touchedCells = new ArrayList<>();
         this.touchedCellBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.pink);
@@ -50,11 +47,7 @@ public class GameEngine {
     }
 
     public void draw(Canvas canvas) {
-        if(canvas == null) {
-            return;
-        }
         canvas.save();
-        canvas.concat(matrix);
         //Рисуем поле
         gameBoard.draw(canvas, board);
         //Рисуем выделенные клетки
@@ -155,10 +148,6 @@ public class GameEngine {
             }
         }
 
-    }
-
-    public void setMatrix(Matrix matrix) {
-        this.matrix = matrix;
     }
 
     public void setGame(Game game) {
