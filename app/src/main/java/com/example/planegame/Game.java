@@ -2,7 +2,9 @@ package com.example.planegame;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -13,6 +15,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private GameThread gameThread;
@@ -30,7 +34,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private float focusY = 0;
     private Matrix matrix = new Matrix();
     private ScaleGestureDetector scaleGestureDetector;
-
     public Game(Context context) {
         super(context);
         init(context);
@@ -161,7 +164,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             gameEngine.setPlanePosition(row, col);
         }
     }
-
     //Завершаем игру
     public void endGame() {
         gameThread.setRunning(false);
