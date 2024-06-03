@@ -52,6 +52,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        buttonStats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StatsDialog statsDialog = new StatsDialog();
+                statsDialog.show(getSupportFragmentManager(), "2");
+            }
+        });
+
+        buttonAchievements.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AchievementsDialog achievementsDialog = new AchievementsDialog();
+                achievementsDialog.show(getSupportFragmentManager(), "3");
+            }
+        });
+
         soundPlayer = SoundPlayer.getInstance();
         playMusic();
     }
