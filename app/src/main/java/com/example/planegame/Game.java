@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.SurfaceHolder;
@@ -21,7 +20,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private int cellSize;
     private int[][] board;
     private int planeRow, planeCol;
-
+    //Музыка
+    private SoundPlayer soundPlayer;
     //Добавляем переменные для хранения фактора масштабирования и смещения
     private float scaleFactor = 1.0f;
     private float minScaleFactor = 1.0f;
@@ -67,6 +67,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         gameThread = new GameThread(holder, this);
         gameThread.setRunning(true);
         gameThread.start();
+
+        //Запускаем музыку
+        soundPlayer = SoundPlayer.getInstance();
+        soundPlayer.playSound(this.getContext(), R.raw.crystal_clear);
+        soundPlayer.setVolume(0.1f);
     }
 
     @Override
@@ -160,6 +165,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     //Завершаем игру
     public void endGame() {
         gameThread.setRunning(false);
+        soundPlayer.stopSound();
         Intent intent = new Intent(getContext(), GameLevels.class);
         getContext().startActivity(intent);
         ((Activity)getContext()).finish();

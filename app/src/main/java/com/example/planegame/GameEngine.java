@@ -7,7 +7,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.widget.TextView;
 
@@ -112,7 +111,7 @@ public class GameEngine {
             }
             plane.setPosition(nextCell[0], nextCell[1]);
             pathIndex++;
-            sleep(65L);
+            sleep(75L);
         }
         else {
             isPlaneMoving = false;
