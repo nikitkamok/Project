@@ -18,11 +18,11 @@ public class Barrier {
         this.cellSize = cellSize;
         this.paint = new Paint();
         this.barrierBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.cloud);
-        this.barrierBitmap = Bitmap.createScaledBitmap(barrierBitmap, (int) ((float)cellSize * 1.2), (int) ((float)cellSize * 1.2), false);
+        this.barrierBitmap = Bitmap.createScaledBitmap(barrierBitmap, (int) ((float)cellSize * 1.3), (int) ((float)cellSize * 1.3), false);
     }
 
     public void draw(Canvas canvas) {
-        int left = col * cellSize - (int) ((float)cellSize * 0.15);
+        int left = col * cellSize - (int) ((float)cellSize * 0.1);
         int top = row * cellSize - (int) ((float)cellSize * 0.15);
         canvas.drawBitmap(barrierBitmap, left, top, paint);
     }

@@ -25,8 +25,8 @@ public class Plane {
     }
 
     public void draw(Canvas canvas) {
-        int left = col * cellSize - (int) ((float)cellSize * 0.1);
-        int top = row * cellSize - (int) ((float)cellSize * 0.1);
+        int left = col * cellSize - (int) ((float)cellSize * 0.05);
+        int top = row * cellSize - (int) ((float)cellSize * 0.05);
         canvas.drawBitmap(planeBitmap, left, top, paint);
     }
 

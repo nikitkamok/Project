@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PlaneGame</string>
+    <string name="app_name">UFOgame</string>
     <string name="start">Начать</string>
     <string name="back">Назад</string>
     <string name="settings">Настройки</string>
