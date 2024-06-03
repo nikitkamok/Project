@@ -1,11 +1,10 @@
 package com.example.planegame;
 
 import android.os.Bundle;
-import android.widget.Button;
 
 public class Level2 extends BaseLevel {
-
     private Game gameView;
+    private SoundPlayer soundPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,6 +13,7 @@ public class Level2 extends BaseLevel {
         setContentView(R.layout.universal);
         gameView = findViewById(R.id.game);
         timer = findViewById(R.id.timer);
+        soundPlayer = SoundPlayer.getInstance();
 
         if (gameView != null) {
             int[][] board = new int[][]{
@@ -33,14 +33,17 @@ public class Level2 extends BaseLevel {
             // Устанавливаем начальную позицию самолета
             gameView.setPlanePosition(2, 2);
 
+            //Запускаем таймер
             startTimer();
+            //Запускаем музыку
+            soundPlayer.playSound(this, R.raw.crystal_clear);
+            soundPlayer.setVolume(0.1f);
         }
 
-        Button buttonBackToMenu = findViewById(R.id.levels_backToMenuBtn);
-
         //Выйти
-        buttonBackToMenu.setOnClickListener(v -> {
+        findViewById(R.id.levels_backToMenuBtn).setOnClickListener(v -> {
             stopTimer();
+            soundPlayer.stopSound();
             gameView.endGame();
         });
     }
