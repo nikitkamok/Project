@@ -125,7 +125,7 @@ public class GameEngine {
             }
             plane.setPosition(nextCell[0], nextCell[1]);
             pathIndex++;
-            sleep(75L);
+            sleep(95L);
         }
         else {
             isPlaneMoving = false;
