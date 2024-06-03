@@ -33,37 +33,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/levels_container5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:layout_marginTop="30dp"
-            android:orientation="vertical">
-
-
-            <ImageView
-                android:id="@+id/levels_starForTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:src="@drawable/water1" />
-
-            <ImageView
-                android:id="@+id/levels_starForzCells"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:src="@drawable/water1" />
-
-            <ImageView
-                android:id="@+id/levels_starForCoins"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:src="@drawable/water1" />
-        </LinearLayout>
-
     </LinearLayout>
 
     <LinearLayout

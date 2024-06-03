@@ -8,6 +8,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -32,6 +34,11 @@ public class GameEngine {
     //Обработка маршрута
     private List<int[]> path;
     private int pathIndex = 0;
+    //Звуки
+    private SoundPool sounds;
+    private int gotCoin;
+    private int movePlane;
+    private int finish;
 
     public GameEngine(Context context, int cellSize) {
         this.context = context;
@@ -43,6 +50,10 @@ public class GameEngine {
         this.touchedCellBitmap = Bitmap.createScaledBitmap(touchedCellBitmap, cellSize,cellSize, false);
         board = new int[Constans.ROWS][Constans.COLS];
         this.gameBoard = new GameBoard(context, board, cellSize);
+        sounds = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        this.gotCoin = sounds.load(context, R.raw.gotcoin, 1);
+        this.movePlane = sounds.load(context, R.raw.ufo, 1);
+        this.finish = sounds.load(context, R.raw.victorious, 1);
     }
 
     public void draw(Canvas canvas) {
@@ -109,6 +120,9 @@ public class GameEngine {
                 touchedCells.clear();
                 return;
             }
+            if(pathIndex > 1) {
+                sounds.play(movePlane, 0.3f, 0.3f, 0, 0, 1.5f);
+            }
             plane.setPosition(nextCell[0], nextCell[1]);
             pathIndex++;
             sleep(75L);
@@ -145,6 +159,7 @@ public class GameEngine {
                     levels_coinCount.setText(String.valueOf(collectedCoins));
                 });
             }
+            sounds.play(gotCoin, 0.1f, 0.1f, 0, 0, 1.5f);
         }
 
     }
@@ -172,6 +187,7 @@ public class GameEngine {
     //Обновляем картинку
     public void update() {
         if(checkFinish()) {
+            sounds.play(finish, 0.1f, 0.1f, 0, 0, 1.5f);
             isPlaneMoving = false;
             touchedCells.clear();
             if(!path.isEmpty()) {
