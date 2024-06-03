@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/main_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/main_background"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
+
+    <LinearLayout
+        android:id="@+id/main_center_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|top"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/main_container1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/app_name"
+                android:fontFamily="@font/comic_sans_ms_pixel_rus_eng"
+                android:shadowColor="@color/black95"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="10"
+                android:textColor="@color/white"
+                android:textSize="75sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/main_paramount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/main_buttonStart"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/btn_play_state_pressed" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_center_botton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/main_container2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/main_secondary"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/main_buttonAchievements"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/btn_achievments_state_pressed" />
+
+                <Button
+                    android:id="@+id/main_buttonSettings"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/btn_settings_state_pressed" />
+
+                <Button
+                    android:id="@+id/main_buttonStats"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/btn_stats_state_pressed" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

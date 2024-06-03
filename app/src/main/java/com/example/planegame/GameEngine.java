@@ -35,10 +35,10 @@ public class GameEngine {
     private List<int[]> path;
     private int pathIndex = 0;
     //Звуки
-    private SoundPool sounds;
-    private int gotCoin;
-    private int movePlane;
-    private int finish;
+    private final SoundPool sounds;
+    private final int gotCoin;
+    private final int movePlane;
+    private final int finish;
 
     public GameEngine(Context context, int cellSize) {
         this.context = context;

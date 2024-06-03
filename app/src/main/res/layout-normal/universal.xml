@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Level1"
+    android:orientation="vertical">
+
+    <com.example.planegame.Game
+        android:id="@+id/game"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/levels_container1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right|top"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/levels_container2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/levels_backToMenuBtn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/btn_back_state_pressed" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/levels_container3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top|left"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/levels_container4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/levels_coin"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:src="@drawable/coin" />
+
+            <TextView
+                android:id="@+id/coin_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="0"
+                android:fontFamily="@font/comic_sans_ms_pixel_rus_eng"
+                android:textSize="30sp"
+                android:textColor="@color/black95"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/levels_container6"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|top"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/levels_container7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:fontFamily="@font/comic_sans_ms_pixel_rus_eng"
+                android:textSize="35sp"
+                android:textColor="@color/black95" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
