@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -27,19 +28,15 @@ public class AchievementsDialog extends DialogFragment {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK button
+                        dialog.dismiss();
                     }
                 });
 
         final AlertDialog dialog = builder.create();
-
-        // Use dialog.setOnShowListener to customize buttons after they are created
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialogInterface) {
                 Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-
-                // Apply custom styles to the buttons
                 positiveButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.pink));
             }
         });
@@ -49,11 +46,10 @@ public class AchievementsDialog extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        // Set the width and height of the dialog
         Dialog dialog = getDialog();
         if (dialog != null) {
-            int width = 900;
-            int height = 450;
+            int width = WindowManager.LayoutParams.WRAP_CONTENT;;
+            int height = WindowManager.LayoutParams.WRAP_CONTENT;;
             dialog.getWindow().setLayout(width, height);
         }
     }
