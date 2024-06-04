@@ -7,9 +7,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 public class Coin {
-    private int cellSize;
+    private final int cellSize;
     private int row, col;
-    private Paint paint;
+    private final Paint paint;
     private Bitmap coinBitmap;
 
     public Coin(Context context, int initialRow, int initialCol, int cellSize) {
@@ -30,13 +30,5 @@ public class Coin {
     public void setPosition(int row, int col) {
         this.row = row;
         this.col = col;
-    }
-
-    public int getRow() {
-        return row;
-    }
-
-    public int getCol() {
-        return col;
     }
 }

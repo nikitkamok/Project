@@ -8,17 +8,15 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 public class GameBoard {
-    private Context context;
     private int[][] board;
-    private int cellSize;
+    private final int cellSize;
     private final Paint paint;
-    private Barrier barrier;
-    private Coin coin;
+    private final Barrier barrier;
+    private final Coin coin;
     private Bitmap backgroundBitmap;
     private Bitmap finishBitmap;
 
     public GameBoard(Context context, int[][] board, int cellSize) {
-        this.context = context;
         this.board = board;
         this.cellSize = cellSize;
         this.paint = new Paint();

@@ -24,11 +24,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private SoundPlayer soundPlayer;
     //Добавляем переменные для хранения фактора масштабирования и смещения
     private float scaleFactor = 1.0f;
-    private float minScaleFactor = 1.0f;
-    private float maxScaleFactor = 1.5f;
-    private float focusX = 0;
-    private float focusY = 0;
-    private Matrix matrix = new Matrix();
+    private final Matrix matrix = new Matrix();
     private ScaleGestureDetector scaleGestureDetector;
     public Game(Context context) {
         super(context);
@@ -134,9 +130,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
             scaleFactor *= detector.getScaleFactor();
+            float minScaleFactor = 1.0f;
+            float maxScaleFactor = 1.5f;
             scaleFactor = Math.max(minScaleFactor, Math.min(scaleFactor, maxScaleFactor));
-            focusX = detector.getFocusX();
-            focusY = detector.getFocusY();
+            float focusX = detector.getFocusX();
+            float focusY = detector.getFocusY();
             matrix.reset();
             matrix.postScale(scaleFactor, scaleFactor, focusX, focusY);
             invalidate();

@@ -1,5 +1,6 @@
 package com.example.planegame;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ public class BaseLevel extends AppCompatActivity {
     protected long startTime;
     protected Handler timerHandler = new Handler();
     protected Runnable timerRunnable = new Runnable() {
+        @SuppressLint("DefaultLocale")
         @Override
         public void run() {
             long millis = System.currentTimeMillis() - startTime;

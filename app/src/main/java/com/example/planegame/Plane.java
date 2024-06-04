@@ -5,13 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import java.util.List;
 
 public class Plane {
     Context context;
-    private int cellSize;
+    private final int cellSize;
     private int row, col;
-    private Paint paint;
+    private final Paint paint;
     private Bitmap planeBitmap;
 
     public Plane(Context context, int initialRow, int initialCol, int cellSize) {
